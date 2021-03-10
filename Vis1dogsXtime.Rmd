@@ -1,36 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@rharlow95 
-Vis-Analytics-FinalProj
-/
-hnin-johnson
-0
-0
-0
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-including waffles for breakfast
-
- main
-@hninj
-hninj committed 17 hours ago 
-1 parent 88b986f commit afd9d3b2d46ea6767d8c7ae107d9db5b38bf115a
-Showing  with 134 additions and 0 deletions.
- 134  hnin.Rmd 
-@@ -0,0 +1,134 @@
 ```{r}
 link="https://github.com/Vis-Analytics-FinalProj/RawData/raw/main/Seattle_Pet_Licenses%20CLEANED.xlsx"
 library(rio)
@@ -139,6 +106,16 @@ bar6= bar5 + geom_text(aes(x=as.Date('2020-03-01'), label="WA Lockdown 3/23/'20"
 
                 
 bar6
+```
+```{r}
+bar7= bar6 + theme_classic() +  theme(axis.text.x = element_text(angle = -90, vjust = .2)) +labs(title = "Dogs Adopted in King Co.",
+                                                                           subtitle= "From Jan 2019 - Jan 2021",
+                                                                           x="Time", 
+                                                                           y="Count",
+                                                                           caption = "Source: King County") + theme(plot.subtitle = element_text(hjust = 0.5), 
+                      plot.title = element_text(hjust = 0.5),
+                      plot.caption = element_text(hjust = 1))
+bar7
 ```
 
 
