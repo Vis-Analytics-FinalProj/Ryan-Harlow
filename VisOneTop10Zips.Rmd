@@ -1,0 +1,106 @@
+1. read data
+```{r}
+link="https://github.com/Vis-Analytics-FinalProj/RawData/raw/main/Seattle_Pet_Licenses%20CLEANED.xlsx"
+library(tidyverse)
+library(ggplot2)
+library(rio)
+petdata=import(link)
+```
+
+```{r}
+summary(petdata$`ZIP Code`)
+```
+
+```{r}
+str(petdata$`ZIP Code`)
+```
+
+```{r}
+petdata$`ZIP Code`=as.character(petdata$`ZIP Code`)
+```
+
+```{r}
+str(petdata$`ZIP Code`)
+```
+
+
+4. Prepare data frame
+```{r}
+a = table(petdata$`ZIP Code`)
+b = as.data.frame(a)
+names(b)[1] = 'Zip'
+b
+```
+
+5. 
+```{r}
+#Order data by Freq
+c = b[order(-b[[2]]),]
+c
+```
+
+```{r}
+#Top 25 zipcodes for adoption.
+ToBar=c[order(-c$Freq)[1:10],]
+ToBar
+```
+
+```{r}
+#Bar chart
+base= ggplot(data = ToBar, 
+             aes(x= reorder(Zip, -Freq),
+                 y = Freq)) 
+base= base + theme_classic()
+
+plot1 = base + geom_bar(fill ="skyblue",
+                        stat = 'identity') 
+plot1
+```
+
+```{r}
+#Darkens bars
+bars=base+geom_bar(stat = 'identity')
+bars
+```
+
+```{r}
+#Darkens bars and adjust bar number to proper height above each bar.
+bartext= bars + geom_text(aes(label=Freq),
+                         nudge_y = 150, angle = -90, vjust = .3, hjust = -.75, color= "white")
+bartext
+```
+
+```{r}
+## Adding title names
+Titles=list(Title="Top 10 Zip Codes for Pets adopted from King County",
+            SubTi="Dec 2015-Early Jan 2021",
+            XTi="Zip Code",
+            YTi="Number",
+            Sou="Source: King County")
+
+## placing the titles on the graph
+plot2= bartext + labs(title = Titles$Title,
+                    subtitle = Titles$SubTi,
+                    x=Titles$XTi,
+                    y=Titles$YTi,
+                    caption = Titles$Sou)
+plot2
+```
+```{r}
+#Adjusting titles to be centered.
+plot3 = plot2 + theme(plot.subtitle = element_text(hjust = 0.5), 
+                      plot.title = element_text(hjust = 0.5),
+                      plot.caption = element_text(hjust = 1))
+              
+plot3
+```
+
+
+
+```{r}
+plotB= plot3 + theme(axis.text.x = element_text(angle = -90, vjust = 0.5, hjust = 1))
+plotB
+```
+
+
+
